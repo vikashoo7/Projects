@@ -1,0 +1,2 @@
+#hostname		normal_user    currentdate[yyyy-mm-dd]  how-many-days  sudo_user
+server1.example.com	user		12-12-2020		10		root

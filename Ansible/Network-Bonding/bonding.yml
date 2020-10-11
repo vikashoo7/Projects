@@ -1,0 +1,100 @@
+- hosts: bond
+  vars_prompt:
+    - name: 'bond'
+      prompt: "Enter the Network Bonding Name"
+      private: no
+
+    - name: nic1
+      prompt: "Enter the 1st Interface name"
+      private: no
+
+    - name: nic2
+      prompt: "Enter the 2nd Interface name"
+      private: no
+
+  vars:
+    IP: "{{ IP }}"
+    NMASK: "{{ NMASK }}"
+    type: 'public'
+    nic1_path: "/etc/sysconfig/network-scripts/ifcfg-{{ nic1 }}"
+    bond_path: "/etc/sysconfig/network-scripts/ifcfg-{{ bond }}"
+    nic2_path: "/etc/sysconfig/network-scripts/ifcfg-{{ nic2 }}"
+
+
+  tasks:
+  - name: Taking Backup of file
+    copy:
+      src: /etc/sysconfig/network-scripts
+      dest: /root/network-scripts-{{ lookup('pipe','date') }}
+      remote_src: yes
+
+  - name: Checking the Bonding module
+    shell: lsmod | grep bonding
+    register: bonding_check
+    ignore_errors: true
+
+  - name: Copying the bonding.conf file
+    template:
+      src: bonding.conf.j2
+      dest: "/etc/modprobe.d/bonding.conf"
+    when: bonding_check.rc != 0
+
+  - name: loading the kernel module
+    shell:
+      cmd: modprobe  bonding
+    when: bonding_check.rc != 0
+
+  - name: Disabling the NetworkMangaer
+    service:
+      name: NetworkManager
+      state: stopped
+      enabled: no
+
+
+  - name: UUID  information for NIC1
+    shell: /bin/grep -i 'UUID' {{ nic1_path}}
+    register: nic1_uuid
+
+  - name: UUID  information for NIC2
+    shell: /bin/grep -i 'UUID' {{ nic2_path}}
+    register: nic2_uuid
+
+  - name: Creating the Bonding Configuration  file
+    template:
+      src=bond.j2
+      dest="{{ bond_path }}"
+    when: type == 'public'
+
+  - name: Creating the Private Bonding configuration
+    template:
+      src=bond_private.j2
+      dest="{{ bond_path }}"
+    when: type == 'private'
+
+  - name:  Creating the NIC1 file
+    template:
+      src=nic1.j2
+      dest="{{ nic1_path }}"
+
+  - name: Creating the NIC2 file
+    template:
+      src=nic2.j2
+      dest="{{ nic2_path }}"
+
+  - name: Adding the UUID to the file
+    shell: |
+       echo {{ nic1_uuid.stdout }} >> {{ nic1_path}}
+       echo {{ nic2_uuid.stdout }} >> {{ nic2_path}}
+
+  - name: Restarting the Network
+    service:
+      name: network
+      state: restarted
+
+  - name: Checking the Bonding Status
+    shell:
+      cmd: /bin/cat /proc/net/bonding/{{bond}}
+    register: bond_status
+
+  - name: Printing the Bonding Status
+    debug: msg="{{ bond_status.stdout.split('\n')[:-1]  }}"

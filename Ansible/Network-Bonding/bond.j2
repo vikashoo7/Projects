@@ -1,0 +1,15 @@
+DEVICE="{{bond }}"
+DNS1="{{ ansible_dns.nameservers[0] }}"
+DNS2="{{ ansible_dns.nameservers[1] }}"
+GATEWAY="{{ansible_default_ipv4.gateway }}"
+HOSTNAME="{{ ansible_fqdn  }}"
+IPADDR="{{ansible_default_ipv4.address}}"
+NETMASK="{{ansible_default_ipv4.netmask}}"
+BOOTPROTO=none
+IPV6INIT="yes"
+MTU="1500"
+NM_CONTROLLED=no
+ONBOOT="yes"
+TYPE="Ethernet"
+USERCTL=no
+BONDING_OPTS="mode=1 miimon=100"

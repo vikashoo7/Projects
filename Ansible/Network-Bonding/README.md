@@ -6,6 +6,7 @@ Configuring the Network Bonding on Public and Private Interface.
 Hardware Detail
 ---------------
 OS: RHEL 7, CentOS 7
+Ansible Version: 2.8
 
 Pre-requisit
 ------------

@@ -24,11 +24,11 @@ How to run?
 
 2. To configure bonding interface for public, use the below command as a root
 
-  #ansible-playbook -i hosts bonding.yml
+        #ansible-playbook -i hosts bonding.yml
 
 3. To configure bonding interface for Private, use the below command
 
-  #ansible-playbook -i  hosts  --extra-vars="type=private IP=192.168.9.2 NMASK=255.255.255.0" bonding.yml
+        #ansible-playbook -i  hosts  --extra-vars="type=private IP=192.168.9.2 NMASK=255.255.255.0" bonding.yml
 
 
 Note: the above IP and Netmask will be changed as per the Environment.

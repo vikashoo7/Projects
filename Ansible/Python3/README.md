@@ -12,6 +12,7 @@ Pre-requisit
 1. Password less connectivity of servers from the Ansible control servers.
 
 How it Works?
+-------------
 1. Create a host file and mention the server name
 
 2. Download the Tar file from the python website "https://www.python.org/downloads/"

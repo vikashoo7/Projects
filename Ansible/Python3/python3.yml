@@ -1,0 +1,40 @@
+---
+- hosts: python
+  gather_facts: false
+  tasks:
+
+  - name: Installing the Required Package
+    yum:
+      name: ['gcc', 'openssl-devel', 'libffi-devel']
+      state: present
+
+  - name: Cleaning the old directory
+    file:
+      dest: /tmp/Python
+      state: absent
+
+  - name: Creating the required Directory Structure
+    file:
+      dest: /tmp/Python
+      state: directory
+
+  - name: Unpacking the tar
+    unarchive:    
+      copy: yes
+      dest: /tmp/Python
+      src: "{{ python_path }}"
+      extra_opts: --strip-components=1
+    register: python_source_unpack
+
+  - name: Configuring python with source 
+    command: ./configure
+    args:
+      chdir: /tmp/Python
+    register: python_configure
+    when: python_source_unpack is changed
+
+  - name: Install Python
+    shell: make && make install
+    args:
+      chdir: /tmp/Python
+    when: python_configure is changed

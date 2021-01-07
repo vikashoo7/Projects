@@ -1,0 +1,40 @@
+---
+- hosts: java
+  gather_facts: no
+  tasks:
+  - name: creating the directory structure
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: 0775
+    with_items:
+      - /app/
+      - /app/java/
+
+  - name: Untar the tar file
+    unarchive:
+      src: "{{ java_tar_file_location }}"
+      dest: /app/java/
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      remote_src: no
+      mode: 0755
+      extra_opts: --strip-components=1
+
+  - name: Creating the Alternative link
+    file:
+      src: /app/java/bin/java
+      dest: /etc/alternatives/java
+      owner: root
+      group: root
+      state: link
+
+  - name: Creating the java linnk
+    file:
+      src: /etc/alternatives/java
+      dest: /usr/bin/java
+      owner: root
+      group: root
+      state: link

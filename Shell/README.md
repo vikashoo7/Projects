@@ -34,5 +34,5 @@ How to run?
 Troubleshooting
 ------
      1. The script will take the copy of sudoers file uder "/sudo" directory.
-     2. The scrpt will genetate the log file uder the w"/root/log"
+     2. The scrpt will genetate the log file uder the "/root/log"
 

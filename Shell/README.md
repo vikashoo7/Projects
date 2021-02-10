@@ -22,14 +22,14 @@ How it Works?
 
 How to run?
 ------
-   1. file explanation
-        info - we need to update the "info" as per the available formate.
-        support.sh - This is the supporting file and primarily it will revoke the user access
-        revoke.sh - This is main file.
+       1. file explanation
+            info - we need to update the "info" as per the available formate.
+            support.sh - This is the supporting file and primarily it will revoke the user access
+            revoke.sh - This is main file.
 
-   2. Run the below command to revoke the user access
-    #chmod o+x revoke.sh
-    #sh /root/revoke.sh 
+       2. Run the below command to revoke the user access
+        #chmod o+x revoke.sh
+        #sh /root/revoke.sh 
 
 Troubleshooting
 ------

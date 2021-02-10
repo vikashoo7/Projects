@@ -7,7 +7,7 @@ Task
 
 Platform
 -------
-    OS: LInux
+    OS: Linux
     Languare : Python 3.X
     Python Module Used: random, replit
 

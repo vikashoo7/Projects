@@ -1,6 +1,7 @@
 Task
 -----
-    This is the Game where you need to guess the word. if you are able to guess the word based on the available option then you will lose else you will lose.
+    This is the Game where you need to guess the word. 
+    If you are able to guess the word based on the available option then you will lose else you will lose.
     You can visit the below link to know more about the game
         https://en.wikipedia.org/wiki/Hangman_(game)
 

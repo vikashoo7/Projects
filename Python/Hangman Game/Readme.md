@@ -5,7 +5,7 @@ Task
     You can visit the below link to know more about the game
         https://en.wikipedia.org/wiki/Hangman_(game)
 
-Platorm
+Platform
 -------
     OS: LInux
     Languare : Python 3.X
